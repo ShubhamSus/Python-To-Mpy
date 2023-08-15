@@ -114,6 +114,13 @@ Partial Class MainForm
         Me.SelectFilesButton.TabIndex = 11
         Me.SelectFilesButton.Text = "Select Py Files"
         '
+        'OpenFileDialogBox
+        '
+        Me.OpenFileDialogBox.DefaultExt = "py"
+        Me.OpenFileDialogBox.Filter = "Python Files (*.py)|*.py"
+        Me.OpenFileDialogBox.Multiselect = True
+        Me.OpenFileDialogBox.Title = "Select Python Files"
+        '
         'RemoveFileContextMenu
         '
         Me.RemoveFileContextMenu.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(63, Byte), Integer), CType(CType(65, Byte), Integer))
@@ -144,8 +151,10 @@ Partial Class MainForm
         Me.Controls.Add(Me.FileTreeView)
         Me.Controls.Add(Me.SelectFilesButton)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
         Me.Name = "MainForm"
         Me.ShowIcon = False
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Python To Mpy"
         Me.RemoveFileContextMenu.ResumeLayout(False)
         Me.ResumeLayout(False)

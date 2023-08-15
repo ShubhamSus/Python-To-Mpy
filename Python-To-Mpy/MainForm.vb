@@ -28,7 +28,7 @@ Public Class MainForm
     End Sub
 
     Private Sub ConvertButton_Click(sender As Object, e As EventArgs) Handles ConvertButton.Click
-        If selectedFilePaths Is Nothing Then
+        If selectedFilePaths Is Nothing OrElse selectedFilePaths.Length = 0 Then
             MessageBox.Show("No Files Are Selected!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
@@ -37,8 +37,6 @@ Public Class MainForm
         SaveFilesDialogBox.Description = "Select a Location To Save Files"
         SaveFilesDialogBox.ShowNewFolderButton = True
 
-        Dim totalFiles As Integer = selectedFilePaths.Length
-        Dim completedFiles As Integer = 0
 
         If SaveFilesDialogBox.ShowDialog() = DialogResult.OK Then
             Dim mpyPath As String = Path.Combine(currentDirectory, "mpy.exe")
@@ -102,6 +100,5 @@ Public Class MainForm
         FileTreeView.Nodes.Remove(FileTreeView.SelectedNode)
         selectedFilePaths = selectedFilePaths.Where(Function(filePath) Not filePath.EndsWith(selectedFileName)).ToArray()
     End Sub
-
 
 End Class
