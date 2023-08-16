@@ -1,18 +1,26 @@
 ﻿Imports System.IO
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement
-Imports DarkUI.Controls
 
 Public Class MainForm
 
-    Dim selectedFilePaths As String()
+    'Dim selectedFilePaths As String()
+    Dim selectedFilePaths As New List(Of String)
     Dim currentDirectory As String = Application.StartupPath
+    Dim mpyPath As String = Path.Combine(currentDirectory, "mpy.exe")
 
     Private Sub SelectFilesButton_Click(sender As Object, e As EventArgs) Handles SelectFilesButton.Click
 
         If OpenFileDialogBox.ShowDialog() = DialogResult.OK Then
-            selectedFilePaths = OpenFileDialogBox.FileNames
+            'selectedFilePaths = OpenFileDialogBox.FileNames
+            For Each files In OpenFileDialogBox.FileNames
+                If selectedFilePaths.Contains(files) Then
+                    MessageBox.Show("Selected Files Already Exist So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                    Continue For
+                End If
+                selectedFilePaths.Add(files)
+            Next
 
             FileTreeView.Nodes.Clear()
+
             Dim filesNode As TreeNode = FileTreeView.Nodes.Add("Python Files")
 
             For Each filePath As String In selectedFilePaths
@@ -20,15 +28,17 @@ Public Class MainForm
                 Dim fileName As String = fileInfo.Name
                 Dim childNode As TreeNode = filesNode.Nodes.Add(fileName)
                 childNode.Tag = filePath
+                Dim filePathChildNode As TreeNode = childNode.Nodes.Add(filePath)
+                filePathChildNode.Tag = filePath
             Next
-            filesNode.Expand()
+            FileTreeView.ExpandAll()
         End If
 
         OpenFileDialogBox.Dispose()
     End Sub
 
     Private Sub ConvertButton_Click(sender As Object, e As EventArgs) Handles ConvertButton.Click
-        If selectedFilePaths Is Nothing OrElse selectedFilePaths.Length = 0 Then
+        If selectedFilePaths Is Nothing OrElse selectedFilePaths.Count = 0 Then
             MessageBox.Show("No Files Are Selected!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
@@ -39,12 +49,11 @@ Public Class MainForm
 
 
         If SaveFilesDialogBox.ShowDialog() = DialogResult.OK Then
-            Dim mpyPath As String = Path.Combine(currentDirectory, "mpy.exe")
 
             Using process As New Process()
                 process.StartInfo.FileName = mpyPath
                 process.StartInfo.UseShellExecute = False
-                process.StartInfo.RedirectStandardOutput = True
+                process.StartInfo.RedirectStandardOutput = False
                 process.StartInfo.CreateNoWindow = True
 
                 For Each filePath In selectedFilePaths
@@ -72,37 +81,30 @@ Public Class MainForm
         End If
     End Sub
 
-    Private Sub ResetButton_Click(sender As Object, e As EventArgs) Handles ResetButton.Click
-        Reset()
-    End Sub
+    Private Sub RemoveFileButton_Click(sender As Object, e As EventArgs) Handles RemoveFileButton.Click
+        Dim clickedNode As TreeNode = FileTreeView.SelectedNode
+        If clickedNode IsNot Nothing AndAlso clickedNode.Parent IsNot Nothing Then
 
-    Private Sub Reset()
-        FileTreeView.Nodes.Clear()
-        selectedFilePaths = Nothing
+            selectedFilePaths.Remove(clickedNode.Tag)
+
+            If clickedNode.Nodes.Count = 0 Then
+                clickedNode.Parent.Remove()
+            ElseIf clickedNode.Nodes.Count = 1 Then
+                clickedNode.Remove()
+            End If
+
+        Else
+            MsgBox("Select A File From TreeView To Remove It.", MsgBoxStyle.Information)
+        End If
+
+        If FileTreeView.Nodes(0).Nodes.Count = 0 Then 'If All The Files are Removed, Remove The Parent Node
+            FileTreeView.Nodes.Clear()
+        End If
     End Sub
 
     Private Function SaveFile(folderPath As String, fileName As String)
         Dim filePath As String = Path.Combine(folderPath, fileName)
         Return filePath
     End Function
-
-
-    'Context Menu
-    Private Sub FileTreeView_MouseClick(sender As Object, e As MouseEventArgs) Handles FileTreeView.MouseClick
-        If e.Button = MouseButtons.Right Then
-            Dim clickedNode As TreeNode = FileTreeView.GetNodeAt(e.Location)
-
-            If clickedNode IsNot Nothing AndAlso Not clickedNode.Parent Is Nothing Then
-                FileTreeView.SelectedNode = clickedNode
-                RemoveFileContextMenu.Show(FileTreeView, e.Location)
-            End If
-        End If
-    End Sub
-
-    Private Sub RemoveToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveToolStripMenuItem.Click
-        Dim selectedFileName As String = FileTreeView.SelectedNode.Text
-        FileTreeView.Nodes.Remove(FileTreeView.SelectedNode)
-        selectedFilePaths = selectedFilePaths.Where(Function(filePath) Not filePath.EndsWith(selectedFileName)).ToArray()
-    End Sub
 
 End Class
