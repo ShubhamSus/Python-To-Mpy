@@ -54,14 +54,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Python-To-Mpy.exe" size="21488">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Python-To-Mpy.exe" size="25072">
       <assemblyIdentity name="Python-To-Mpy" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iuj7fic07GFfVmBDXRlkCQM3wLdEGEc4HjA9jF4NWdc=</dsig:DigestValue>
+        <dsig:DigestValue>oesquEsET+bNYwWwiB3TCBk2c0tC1K+ewD4sZtKf0dU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
