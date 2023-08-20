@@ -2,74 +2,92 @@
 
 Public Class MainForm
 
-    Dim selectedFilePaths As New List(Of String)
-    Dim currentDirectory As String = Application.StartupPath
-    Dim mpyPath As String = Path.Combine(currentDirectory, "mpy.exe")
+    Dim selectedFilePaths As New List(Of String) 'List To Store Path Of Selected Files
+    Dim currentDirectory As String = Application.StartupPath 'Getting Current Application Directory
+    Dim mpyApplicationPath As String = Path.Combine(currentDirectory, "mpy.exe") 'Mpy Application Path
 
+    'Select File Button Click Event
     Private Sub SelectFilesButton_Click(sender As Object, e As EventArgs) Handles SelectFilesButton.Click
-
+        'Check If Dialog Result is OK
         If OpenFileDialogBox.ShowDialog() = DialogResult.OK Then
-            'selectedFilePaths = OpenFileDialogBox.FileNames
+            'Looping Through Each Files Selected From Dialog Box
             For Each files In OpenFileDialogBox.FileNames
+                'If Files Are Already in TreeView or In List Don't Add It Again In List And In TreeView
                 If selectedFilePaths.Contains(files) Then
                     MessageBox.Show("Selected File Already Exist So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Continue For
                 End If
+                'Adding FilePath In List
                 selectedFilePaths.Add(files)
             Next
 
+            'Loading FilePath In TreeView According To Data In List
             LoadDataInTreeView()
         End If
 
+        'Disposing the Dialog Box After Its Use
         OpenFileDialogBox.Dispose()
     End Sub
 
+    'Convert To Mpy Button Click Event
     Private Sub ConvertButton_Click(sender As Object, e As EventArgs) Handles ConvertButton.Click
+        'Check If List Is Empty Or Is Nothing
         If selectedFilePaths Is Nothing OrElse selectedFilePaths.Count = 0 Then
             MessageBox.Show("No Files Are Selected!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Exit Sub
         End If
 
+        'Creating A FolderBrowserDialog Box Object
         Dim SaveFilesDialogBox As New FolderBrowserDialog()
         SaveFilesDialogBox.Description = "Select a Location To Save Files"
         SaveFilesDialogBox.ShowNewFolderButton = True
 
-
+        'If Dialog Result Is OK
         If SaveFilesDialogBox.ShowDialog() = DialogResult.OK Then
-
+            'Create a New Process To Run Mpy Application
             Using process As New Process()
-                process.StartInfo.FileName = mpyPath
+                process.StartInfo.FileName = mpyApplicationPath 'Path To Mpy Application .exe File
                 process.StartInfo.UseShellExecute = False
                 process.StartInfo.RedirectStandardOutput = False
-                process.StartInfo.CreateNoWindow = True
+                process.StartInfo.CreateNoWindow = True 'Dont Create Terminal Window
 
+                'Looping Through Each FilePath Present In List
                 For Each filePath In selectedFilePaths
+                    'Just a Safe Check If File Is Nothing Skip That File
                     If filePath Is Nothing Then
                         'Skip That
+                        MsgBox("File Is Nothing.")
+                        Continue For
                     End If
-                    Dim fileName As String = Path.GetFileNameWithoutExtension(filePath)
-                    Dim outputFile As String = Path.Combine(SaveFilesDialogBox.SelectedPath, fileName & ".mpy")
 
-                    process.StartInfo.Arguments = String.Format("-o ""{0}"" ""{1}""", outputFile, filePath)
+                    Dim fileName As String = Path.GetFileNameWithoutExtension(filePath) 'Getting FileName Without Its Extension 
+                    Dim outputFile As String = Path.Combine(SaveFilesDialogBox.SelectedPath, fileName & ".mpy") 'Combining SelectedFolder Path & FileName To Store .Mpy
 
-                    process.Start()
-                    process.WaitForExit()
+                    process.StartInfo.Arguments = $"-o ""{outputFile}"" ""{filePath}""" 'Setting Argument For Mpy Application '-o' For Output Directory And .Py File
+
+                    process.Start() 'Starting The Mpy Application
+                    process.WaitForExit() 'Wait Until Its Execution Is Finished
                 Next
             End Using
 
+            'Disposing Save File DialogBox
             SaveFilesDialogBox.Dispose()
 
-
+            'Showing A MsgBox If User Want To Open The Directory Where .Mpy Files Are Saved
             Dim result As DialogResult = MessageBox.Show("All files have been converted to .Mpy. Would you like to open the directory where the files are saved?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Information)
             If result = DialogResult.Yes Then
+                'If Yes Open The Selected Folder Path
                 Process.Start(SaveFilesDialogBox.SelectedPath) 'Open Folder Where Files Are Saved
             End If
 
         End If
     End Sub
 
+    'Remove Selected File Button Click Event
     Private Sub RemoveFileButton_Click(sender As Object, e As EventArgs) Handles RemoveFileButton.Click
-        Dim clickedNode As TreeNode = FileTreeView.SelectedNode
+        Dim clickedNode As TreeNode = FileTreeView.SelectedNode 'Getting Current Selected Node
+
+        'Checking If Selected Node Is Not Nothing And It Contain A Parent 
         If clickedNode IsNot Nothing AndAlso clickedNode.Parent IsNot Nothing Then
 
             selectedFilePaths.Remove(clickedNode.Tag)
@@ -143,25 +161,25 @@ Public Class MainForm
         LoadDataInTreeView()
     End Sub
 
-    'Function
-    Private Function SaveFile(folderPath As String, fileName As String)
-        Dim filePath As String = Path.Combine(folderPath, fileName)
-        Return filePath
-    End Function
 
     Private Sub LoadDataInTreeView()
+        'Clear The Whole TreeView
         FileTreeView.Nodes.Clear()
 
-        Dim filesNode As TreeNode = FileTreeView.Nodes.Add("Python Files")
+        Dim filesNode As TreeNode = FileTreeView.Nodes.Add("Python Files") 'Create A Parent Node With A Root Node Called 'Python Files'
 
+        'Looping Through Each Path From List
         For Each filePath As String In selectedFilePaths
-            Dim fileInfo As New FileInfo(filePath)
-            Dim fileName As String = fileInfo.Name
-            Dim childNode As TreeNode = filesNode.Nodes.Add(fileName)
-            childNode.Tag = filePath
-            Dim filePathChildNode As TreeNode = childNode.Nodes.Add(filePath)
-            filePathChildNode.Tag = filePath
+            Dim fileInfo As New FileInfo(filePath) 'Creating a FileInfo Object To Fetch Its Name
+            Dim fileName As String = fileInfo.Name 'Getting its FileName With Extension
+
+            Dim childNode As TreeNode = filesNode.Nodes.Add(fileName) 'Creating A Node Under Root Node With Text as File Name
+            childNode.Tag = filePath 'Storing Whole Path In Tag Of That Node
+            Dim filePathChildNode As TreeNode = childNode.Nodes.Add(filePath) 'Creating A Child Node With Full File Path
+            filePathChildNode.Tag = filePath 'Storing Whole Path In Tag Of That Node
         Next
+
+        'Expanding All The Nodes In TreeView
         FileTreeView.ExpandAll()
     End Sub
 
