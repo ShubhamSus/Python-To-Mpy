@@ -11,14 +11,15 @@ Public Class MainForm
         'Check If Dialog Result is OK
         If OpenFileDialogBox.ShowDialog() = DialogResult.OK Then
             'Looping Through Each Files Selected From Dialog Box
-            For Each files In OpenFileDialogBox.FileNames
+            For Each file In OpenFileDialogBox.FileNames
                 'If Files Are Already in TreeView or In List Don't Add It Again In List And In TreeView
-                If selectedFilePaths.Contains(files) Then
-                    MessageBox.Show("Selected File Already Exist So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+                If selectedFilePaths.Contains(file) Then
+
+                    MessageBox.Show($"{Path.GetFileName(file)} Exists So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
                     Continue For
                 End If
                 'Adding FilePath In List
-                selectedFilePaths.Add(files)
+                selectedFilePaths.Add(file)
             Next
 
             'Loading FilePath In TreeView According To Data In List
@@ -152,7 +153,8 @@ Public Class MainForm
 
         For Each file In files
             If selectedFilePaths.Contains(file) Then
-                MessageBox.Show("Selected Files Already Exist So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+
+                MessageBox.Show($"{Path.GetFileName(file)} Exists So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
                 Continue For
             End If
             selectedFilePaths.Add(file)
