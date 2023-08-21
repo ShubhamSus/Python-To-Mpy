@@ -39,11 +39,11 @@ Partial Class MainForm
         '
         Me.RemoveFileButton.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RemoveFileButton.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.RemoveFileButton.Location = New System.Drawing.Point(1, 43)
-        Me.RemoveFileButton.Margin = New System.Windows.Forms.Padding(1)
+        Me.RemoveFileButton.Location = New System.Drawing.Point(1, 44)
+        Me.RemoveFileButton.Margin = New System.Windows.Forms.Padding(1, 2, 2, 1)
         Me.RemoveFileButton.Name = "RemoveFileButton"
         Me.RemoveFileButton.Padding = New System.Windows.Forms.Padding(5)
-        Me.RemoveFileButton.Size = New System.Drawing.Size(141, 40)
+        Me.RemoveFileButton.Size = New System.Drawing.Size(140, 39)
         Me.RemoveFileButton.TabIndex = 16
         Me.RemoveFileButton.Text = "Remove File"
         '
@@ -65,11 +65,11 @@ Partial Class MainForm
         '
         Me.ConvertButton.Dock = System.Windows.Forms.DockStyle.Fill
         Me.ConvertButton.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.ConvertButton.Location = New System.Drawing.Point(144, 1)
-        Me.ConvertButton.Margin = New System.Windows.Forms.Padding(1)
+        Me.ConvertButton.Location = New System.Drawing.Point(145, 1)
+        Me.ConvertButton.Margin = New System.Windows.Forms.Padding(2, 1, 1, 2)
         Me.ConvertButton.Name = "ConvertButton"
         Me.ConvertButton.Padding = New System.Windows.Forms.Padding(5)
-        Me.ConvertButton.Size = New System.Drawing.Size(142, 40)
+        Me.ConvertButton.Size = New System.Drawing.Size(141, 39)
         Me.ConvertButton.TabIndex = 14
         Me.ConvertButton.Text = "Convert To Mpy"
         '
@@ -107,10 +107,10 @@ Partial Class MainForm
         Me.SelectFilesButton.Dock = System.Windows.Forms.DockStyle.Fill
         Me.SelectFilesButton.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
         Me.SelectFilesButton.Location = New System.Drawing.Point(1, 1)
-        Me.SelectFilesButton.Margin = New System.Windows.Forms.Padding(1)
+        Me.SelectFilesButton.Margin = New System.Windows.Forms.Padding(1, 1, 2, 2)
         Me.SelectFilesButton.Name = "SelectFilesButton"
         Me.SelectFilesButton.Padding = New System.Windows.Forms.Padding(5)
-        Me.SelectFilesButton.Size = New System.Drawing.Size(141, 40)
+        Me.SelectFilesButton.Size = New System.Drawing.Size(140, 39)
         Me.SelectFilesButton.TabIndex = 11
         Me.SelectFilesButton.Text = "Select Py Files"
         '
@@ -140,11 +140,11 @@ Partial Class MainForm
         '
         Me.RemoveAllFilesButton.Dock = System.Windows.Forms.DockStyle.Fill
         Me.RemoveAllFilesButton.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold)
-        Me.RemoveAllFilesButton.Location = New System.Drawing.Point(144, 43)
-        Me.RemoveAllFilesButton.Margin = New System.Windows.Forms.Padding(1)
+        Me.RemoveAllFilesButton.Location = New System.Drawing.Point(145, 44)
+        Me.RemoveAllFilesButton.Margin = New System.Windows.Forms.Padding(2, 2, 1, 1)
         Me.RemoveAllFilesButton.Name = "RemoveAllFilesButton"
         Me.RemoveAllFilesButton.Padding = New System.Windows.Forms.Padding(5)
-        Me.RemoveAllFilesButton.Size = New System.Drawing.Size(142, 40)
+        Me.RemoveAllFilesButton.Size = New System.Drawing.Size(141, 39)
         Me.RemoveAllFilesButton.TabIndex = 18
         Me.RemoveAllFilesButton.Text = "Remove All Files "
         '
