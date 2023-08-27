@@ -1,2 +1,4 @@
-# Python-To-Mpy
- Desktop Application To Convert Multiple Python Files To Mpy Files For CircuitPython/MicroPython
+
+# Overview
+
+Developed using .NET 4.8, this desktop application facilitates the conversion of multiple Python files into Mpy files, compatible with CircuitPython/MicroPython platforms.
