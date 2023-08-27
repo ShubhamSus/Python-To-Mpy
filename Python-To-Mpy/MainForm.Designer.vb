@@ -23,7 +23,6 @@ Partial Class MainForm
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.RemoveFileButton = New DarkUI.Controls.DarkButton()
-        Me.DarkLabel3 = New DarkUI.Controls.DarkLabel()
         Me.ConvertButton = New DarkUI.Controls.DarkButton()
         Me.DarkLabel2 = New DarkUI.Controls.DarkLabel()
         Me.FileTreeView = New System.Windows.Forms.TreeView()
@@ -46,20 +45,6 @@ Partial Class MainForm
         Me.RemoveFileButton.Size = New System.Drawing.Size(140, 39)
         Me.RemoveFileButton.TabIndex = 16
         Me.RemoveFileButton.Text = "Remove File"
-        '
-        'DarkLabel3
-        '
-        Me.DarkLabel3.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.DarkLabel3.Font = New System.Drawing.Font("Segoe UI", 8.25!, System.Drawing.FontStyle.Bold)
-        Me.DarkLabel3.ForeColor = System.Drawing.Color.FromArgb(CType(CType(220, Byte), Integer), CType(CType(220, Byte), Integer), CType(CType(220, Byte), Integer))
-        Me.DarkLabel3.Location = New System.Drawing.Point(15, 359)
-        Me.DarkLabel3.Margin = New System.Windows.Forms.Padding(1, 3, 2, 3)
-        Me.DarkLabel3.Name = "DarkLabel3"
-        Me.DarkLabel3.Size = New System.Drawing.Size(287, 19)
-        Me.DarkLabel3.TabIndex = 15
-        Me.DarkLabel3.Text = "(Developed By Shubham Patel)"
-        Me.DarkLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'ConvertButton
         '
@@ -172,8 +157,7 @@ Partial Class MainForm
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.FromArgb(CType(CType(60, Byte), Integer), CType(CType(63, Byte), Integer), CType(CType(65, Byte), Integer))
-        Me.ClientSize = New System.Drawing.Size(314, 390)
-        Me.Controls.Add(Me.DarkLabel3)
+        Me.ClientSize = New System.Drawing.Size(314, 367)
         Me.Controls.Add(Me.TableLayoutPanel1)
         Me.Controls.Add(Me.DarkLabel1)
         Me.Controls.Add(Me.DarkLabel2)
@@ -189,7 +173,6 @@ Partial Class MainForm
 
     End Sub
     Friend WithEvents RemoveFileButton As DarkUI.Controls.DarkButton
-    Friend WithEvents DarkLabel3 As DarkUI.Controls.DarkLabel
     Friend WithEvents ConvertButton As DarkUI.Controls.DarkButton
     Friend WithEvents DarkLabel2 As DarkUI.Controls.DarkLabel
     Friend WithEvents FileTreeView As TreeView
