@@ -10,6 +10,8 @@ Developed using .NET 4.8, this desktop application facilitates the conversion of
 - Open Solution in Visual Studio: Launch `Visual Studio` (ensure that .Net 4.8 is installed) and open the `Python-To-Mpy.sln` solution file.
 
 - Build the Application: From within Visual Studio, build the application using the built-in build tools.
+
+- Ensure that the `Mpy-Cross` application is located within the application directory, named as `mpy`.
     
 ## Demo
 
