@@ -11,7 +11,7 @@ Developed using .NET 4.8, this desktop application facilitates the conversion of
 
 - Build the Application: From within Visual Studio, build the application using the built-in build tools.
 
-- Ensure that the `Mpy-Cross` application is located within the application directory, named as `mpy`.
+- **Ensure that the `Mpy-Cross` application is located within the application directory, named as `mpy`.**
     
 ## Demo
 
