@@ -4,7 +4,7 @@ Public Class MainForm
 
     Dim selectedFilePaths As New List(Of String) 'List To Store Path Of Selected Files
     Dim currentDirectory As String = Application.StartupPath 'Getting Current Application Directory
-    Dim mpyApplicationPath As String = Path.Combine(currentDirectory, "mpy.exe") 'Mpy Application Path
+    Dim mpyApplicationPath As String = Path.Combine(currentDirectory, "mpy-cross.exe") 'Mpy Application Path
 
     'Select File Button Click Event
     Private Sub SelectFilesButton_Click(sender As Object, e As EventArgs) Handles SelectFilesButton.Click
@@ -12,7 +12,7 @@ Public Class MainForm
         If OpenFileDialogBox.ShowDialog() = DialogResult.OK Then
             'Looping Through Each Files Selected From Dialog Box
             For Each file In OpenFileDialogBox.FileNames
-                'If Files Are Already in TreeView or In List Don't Add It Again In List And In TreeView
+                'If Files Are Already in List Don't Add It Again In List And In TreeView
                 If selectedFilePaths.Contains(file) Then
 
                     MessageBox.Show($"{Path.GetFileName(file)} Exists So It Would Not Be Added.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
@@ -57,17 +57,25 @@ Public Class MainForm
                     'Just a Safe Check If File Is Nothing Skip That File
                     If filePath Is Nothing Then
                         'Skip That
-                        MsgBox("File Is Nothing.")
+                        'MsgBox("File Is Nothing.")
                         Continue For
                     End If
 
-                    Dim fileName As String = Path.GetFileNameWithoutExtension(filePath) 'Getting FileName Without Its Extension 
-                    Dim outputFile As String = Path.Combine(SaveFilesDialogBox.SelectedPath, fileName & ".mpy") 'Combining SelectedFolder Path & FileName To Store .Mpy
 
-                    process.StartInfo.Arguments = $"-o ""{outputFile}"" ""{filePath}""" 'Setting Argument For Mpy Application '-o' For Output Directory And .Py File
+                    Try
+                        Dim fileName As String = Path.GetFileNameWithoutExtension(filePath) 'Getting FileName Without Its Extension 
+                        Dim outputFile As String = Path.Combine(SaveFilesDialogBox.SelectedPath, fileName & ".mpy") 'Combining SelectedFolder Path & FileName To Store .Mpy
 
-                    process.Start() 'Starting The Mpy Application
-                    process.WaitForExit() 'Wait Until Its Execution Is Finished
+                        process.StartInfo.Arguments = $"-o ""{outputFile}"" ""{filePath}""" 'Setting Argument For Mpy Application '-o' For Output Directory And .Py File
+
+                        process.Start() 'Starting The Mpy Application
+
+                        process.WaitForExit() 'Wait Until Its Execution Is Finished
+                    Catch ex As Exception
+                        MessageBox.Show($"Can't Find 'mpy.exe' in '{currentDirectory}', Please Paste Your 'mpy-cross.exe' In Application Directory.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        Exit Sub
+                    End Try
+
                 Next
             End Using
 
