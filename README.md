@@ -18,3 +18,7 @@ Developed using .NET 4.8, this desktop application facilitates the conversion of
 ![Screenshot](https://i.ibb.co/r7vvv7M/1.png)
 
 ![Screenshot](https://i.ibb.co/8DXC2y1/2.png)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
