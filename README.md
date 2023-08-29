@@ -21,4 +21,4 @@ Developed using .NET 4.8, this desktop application facilitates the conversion of
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
